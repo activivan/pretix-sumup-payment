@@ -173,10 +173,9 @@ msgstr "Fehler beim Erstellen des SumUp Checkouts"
 
 #: .\pretix_sumup\payment.py:263
 msgid ""
-"After confirmation you will be redirected to SumUp to complete the payment."
+"After you submitted your order, you can enter your credit card details."
 msgstr ""
-"Nach Bestätigung wirst du zu SumUp weitergeleitet um die Zahlung "
-"abzuschließen."
+"Nach Absenden deiner Bestellung kannst du deine Kartendaten eingeben."
 
 #: .\pretix_sumup\payment.py:342 .\pretix_sumup\payment.py:354
 msgid "Error while refunding SumUp transaction"

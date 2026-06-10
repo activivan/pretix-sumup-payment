@@ -156,7 +156,7 @@ class SumUp(BasePaymentProvider):
         errors = {}
 
         access_token = cleaned_data.get("payment_sumup_access_token")
-        if access_token is not None and access_token != SECRET_REDACTED:
+        if access_token is not None and access_token != self.settings.get("access_token"):
             try:
                 (
                     merchant_name,
@@ -206,6 +206,10 @@ class SumUp(BasePaymentProvider):
         return cleaned_data
 
     def is_allowed(self, request: HttpRequest, total: Decimal = None):
+        # Make sure pretix allows method (manually set min/max values)
+        if not super().is_allowed(request, total):
+            return False
+
         if total is None:
             return True
         # minimum amount is 1 EUR or similar in other currencies
@@ -259,9 +263,10 @@ class SumUp(BasePaymentProvider):
             raise PaymentException(_("Error while creating SumUp checkout"))
 
     def checkout_confirm_render(self, request: HttpRequest, **kwargs):
-        return _(
-            "After confirmation you will be redirected to SumUp to complete the payment."
+        msg = _(
+            "After you submitted your order, you can enter your credit card details."
         )
+        return f"<p>{msg}</p>"
 
     def payment_form_render(self, request: HttpRequest, **kwargs):
         return self.checkout_confirm_render(request, **kwargs)
