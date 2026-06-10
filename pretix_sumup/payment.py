@@ -6,6 +6,7 @@ from django.http import HttpRequest
 from django.template.loader import get_template
 from django.utils.crypto import get_random_string
 from django.utils.translation import gettext_lazy as _
+from django.utils.html import format_html
 from pretix.base.forms import SECRET_REDACTED, SecretKeySettingsField
 from pretix.base.middleware import get_language_from_request
 from pretix.base.models import Order, OrderPayment, OrderRefund
@@ -266,7 +267,7 @@ class SumUp(BasePaymentProvider):
         msg = _(
             "After you submitted your order, you can enter your credit card details."
         )
-        return f"<p>{msg}</p>"
+        return format_html("<p>{}</p>", msg)
 
     def payment_form_render(self, request: HttpRequest, **kwargs):
         return self.checkout_confirm_render(request, **kwargs)
